@@ -66,6 +66,8 @@ lerna-debug.log*
 
 # ===== Env & Secrets =====
 .env
+*.env
+!*.env.example
 *.env.local
 
 # ===== Local backups / dumps =====
