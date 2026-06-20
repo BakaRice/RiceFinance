@@ -9,12 +9,18 @@ import { RegisterRequest, LoginRequest, AuthResponse, UserDto } from './auth.dto
 
 @Injectable()
 export class AuthService {
+  private static readonly PRIVATE_REGISTRATION_EMAIL_PREFIX = 'ricemarch';
+
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
 
   async register(req: RegisterRequest): Promise<AuthResponse> {
+    if (!this.canRegisterEmail(req.email)) {
+      throw new AppError(ErrorCode.FORBIDDEN, 'Registration is not available for this account');
+    }
+
     const existing = await this.prisma.user.findUnique({ where: { email: req.email } });
     if (existing) throw new AppError(ErrorCode.CONFLICT, 'Email already registered');
 
@@ -29,6 +35,10 @@ export class AuthService {
     });
 
     return this.generateAuthResponse(user);
+  }
+
+  private canRegisterEmail(email: string): boolean {
+    return email.trim().toLowerCase().startsWith(AuthService.PRIVATE_REGISTRATION_EMAIL_PREFIX);
   }
 
   async login(req: LoginRequest): Promise<AuthResponse> {
