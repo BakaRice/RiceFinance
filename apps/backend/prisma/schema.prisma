@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  displayName  String?  @map("display_name")
+  baseCurrency String   @default("CNY") @map("base_currency")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  refreshTokens      RefreshToken[]
+  assetAccounts      AssetAccount[]
+  liabilityAccounts  LiabilityAccount[]
+  netWorthSnapshots  NetWorthSnapshot[]
+  snapshotItems      SnapshotItem[]
+  reports            Report[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz()
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("refresh_tokens")
+}
+
+model AssetAccount {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  clientUid      String    @map("client_uid")
+  name           String
+  type           String
+  platform       String?
+  currency       String    @default("CNY")
+  amount         Decimal   @db.Decimal(20, 4)
+  shareCount     Decimal?  @map("share_count") @db.Decimal(20, 4)
+  risk           String?   @default("medium")
+  liquidity      String?   @default("medium")
+  note           String?
+  clientUpdatedAt DateTime @map("client_updated_at") @db.Timestamptz()
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz()
+  version        Int       @default(0)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clientUid])
+  @@index([userId, updatedAt, deletedAt])
+  @@map("asset_accounts")
+}
+
+model LiabilityAccount {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  clientUid      String    @map("client_uid")
+  name           String
+  type           String
+  currency       String    @default("CNY")
+  amount         Decimal   @db.Decimal(20, 4)
+  dueDate        DateTime? @map("due_date") @db.Timestamptz()
+  note           String?
+  clientUpdatedAt DateTime @map("client_updated_at") @db.Timestamptz()
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz()
+  version        Int       @default(0)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clientUid])
+  @@index([userId, updatedAt, deletedAt])
+  @@map("liability_accounts")
+}
+
+model NetWorthSnapshot {
+  id              String    @id @default(uuid()) @db.Uuid
+  userId          String    @map("user_id") @db.Uuid
+  clientUid       String    @map("client_uid")
+  snapshotDate    DateTime  @map("snapshot_date") @db.Date
+  totalAssets     Decimal   @map("total_assets") @db.Decimal(20, 4)
+  totalLiabilities Decimal  @map("total_liabilities") @db.Decimal(20, 4)
+  netWorth        Decimal   @map("net_worth") @db.Decimal(20, 4)
+  currency        String    @default("CNY")
+  note            String?
+  clientUpdatedAt DateTime  @map("client_updated_at") @db.Timestamptz()
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt       DateTime? @map("deleted_at") @db.Timestamptz()
+  version         Int       @default(0)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clientUid])
+  @@index([userId, updatedAt, deletedAt])
+  @@map("net_worth_snapshots")
+}
+
+model SnapshotItem {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @map("user_id") @db.Uuid
+  snapshotClientUid String  @map("snapshot_client_uid")
+  clientUid        String   @map("client_uid")
+  sourceName       String   @map("source_name")
+  amount           Decimal  @db.Decimal(20, 4)
+  category         String?
+  risk             String?
+  liquidity        String?
+  isLiability      Boolean  @default(false) @map("is_liability")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clientUid])
+  @@index([userId, snapshotClientUid])
+  @@map("snapshot_items")
+}
+
+model Report {
+  id              String    @id @default(uuid()) @db.Uuid
+  userId          String    @map("user_id") @db.Uuid
+  clientUid       String    @map("client_uid")
+  title           String
+  reportType      String    @map("report_type")
+  markdown        String
+  summaryJson     Json?     @map("summary_json") @db.JsonB
+  generatedAt     DateTime  @map("generated_at") @db.Timestamptz()
+  clientUpdatedAt DateTime  @map("client_updated_at") @db.Timestamptz()
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt       DateTime? @map("deleted_at") @db.Timestamptz()
+  version         Int       @default(0)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clientUid])
+  @@index([userId, updatedAt, deletedAt])
+  @@map("reports")
+}
+
+model ExchangeRate {
+  id            String   @id @default(uuid()) @db.Uuid
+  baseCurrency  String   @map("base_currency")
+  targetCurrency String  @map("target_currency")
+  rate          Decimal  @db.Decimal(20, 6)
+  rateDate      DateTime @map("rate_date") @db.Date
+  source        String   @default("manual")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@unique([baseCurrency, targetCurrency, rateDate])
+  @@map("exchange_rates")
+}

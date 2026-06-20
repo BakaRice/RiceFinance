@@ -1,0 +1,82 @@
+{
+  "deviceId": "web-import",
+  "changes": {
+    "assets": [
+      {
+        "clientUid": "fund-hk-001",
+        "name": "路博迈新世代智能连接基金",
+        "type": "fund",
+        "platform": "路博迈 (Neuberger Berman)",
+        "currency": "HKD",
+        "amount": "587.38",
+        "shareCount": null,
+        "risk": "high",
+        "liquidity": "medium",
+        "note": "ISIN: IE00BMPRXQ63 · 盈亏 +87.39 (+17.48%)",
+        "clientUpdatedAt": "2026-06-07T15:00:00Z",
+        "deletedAt": null,
+        "version": 0
+      },
+      {
+        "clientUid": "fund-hk-002",
+        "name": "联博美国成长基金 HKD (AD)",
+        "type": "fund",
+        "platform": "联博 (AllianceBernstein)",
+        "currency": "HKD",
+        "amount": "108.29",
+        "shareCount": null,
+        "risk": "high",
+        "liquidity": "medium",
+        "note": "ISIN: LU1069344957 · 盈亏 +9.34 (+9.35%)",
+        "clientUpdatedAt": "2026-06-07T15:00:00Z",
+        "deletedAt": null,
+        "version": 0
+      },
+      {
+        "clientUid": "fund-hk-003",
+        "name": "安联收益及增长基金 HKD (A)",
+        "type": "fund",
+        "platform": "安联投资 (Allianz)",
+        "currency": "HKD",
+        "amount": "114.65",
+        "shareCount": null,
+        "risk": "medium",
+        "liquidity": "medium",
+        "note": "ISIN: LU0820561909 · 盈亏 +7.99 (+7.25%)",
+        "clientUpdatedAt": "2026-06-07T15:00:00Z",
+        "deletedAt": null,
+        "version": 0
+      },
+      {
+        "clientUid": "fund-hk-004",
+        "name": "邓普顿新兴市场动力入息基金",
+        "type": "fund",
+        "platform": "富兰克林邓普顿 (Franklin Templeton)",
+        "currency": "HKD",
+        "amount": "322.66",
+        "shareCount": null,
+        "risk": "high",
+        "liquidity": "medium",
+        "note": "ISIN: LU2251237488 · 盈亏 +29.27 (+9.76%)",
+        "clientUpdatedAt": "2026-06-07T15:00:00Z",
+        "deletedAt": null,
+        "version": 0
+      },
+      {
+        "clientUid": "fund-hk-005",
+        "name": "大成中国灵活配置基金 A",
+        "type": "fund",
+        "platform": "大成国际 (Da Cheng)",
+        "currency": "HKD",
+        "amount": "2087.30",
+        "shareCount": null,
+        "risk": "medium",
+        "liquidity": "medium",
+        "note": "ISIN: HK0000181112 · 盈亏 +42.78 (+2.04%)",
+        "clientUpdatedAt": "2026-06-07T15:00:00Z",
+        "deletedAt": null,
+        "version": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+# ===== macOS / OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Claude / AI =====
+.claude/settings.local.json
+AGENTS.md
+
+# ===== iOS / Xcode =====
+*.xcuserdata
+xcuserdata/
+*.xcuserdatad/
+*.xcuserstate
+*.xcworkspace/xcuserdata
+DerivedData/
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Carthage/
+Pods/
+
+# ===== Java / Gradle =====
+.gradle/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+*.iws
+*.ipr
+
+# ===== Node / Web =====
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===== IDE — IntelliJ =====
+.idea/
+
+# ===== IDE — VS Code =====
+.vscode/
+
+# ===== Obsidian =====
+.obsidian/
+.obsidian/workspace.json
+
+# ===== Env & Secrets =====
+.env
+*.env.local
+
+# ===== Local backups / dumps =====
+backups/
+
+# ===== Logs =====
+logs/
