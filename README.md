@@ -1,5 +1,7 @@
 # RiceFinance
 
+[中文说明](README.zh-CN.md)
+
 RiceFinance is a personal finance companion for tracking assets, liabilities, net worth snapshots, and monthly AI-assisted financial reviews.
 
 The project is built for low-frequency, long-term personal finance reflection rather than daily transaction logging or investment trading. It focuses on answering questions like:
